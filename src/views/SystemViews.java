@@ -1,4 +1,4 @@
-package views;
+    package views;
 
 //  @author ALEJANDRO
 
@@ -150,7 +150,7 @@ public class SystemViews extends javax.swing.JFrame {
         jLabel31 = new javax.swing.JLabel();
         txt_employees_search = new javax.swing.JTextField();
         jScrollPane4 = new javax.swing.JScrollPane();
-        employees_table = new javax.swing.JTable();
+        employees = new javax.swing.JTable();
         jPanel8 = new javax.swing.JPanel();
         jPanel16 = new javax.swing.JPanel();
         jLabel32 = new javax.swing.JLabel();
@@ -1051,8 +1051,8 @@ public class SystemViews extends javax.swing.JFrame {
         txt_employees_search.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         jPanel7.add(txt_employees_search, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 330, 160, 25));
 
-        employees_table.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
-        employees_table.setModel(new javax.swing.table.DefaultTableModel(
+        employees.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        employees.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -1060,7 +1060,7 @@ public class SystemViews extends javax.swing.JFrame {
                 "Identificación", "Nombre ", "Usuario", "Dirección", "Teléfono", "Correo", "Rol"
             }
         ));
-        jScrollPane4.setViewportView(employees_table);
+        jScrollPane4.setViewportView(employees);
 
         jPanel7.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 370, 930, 130));
 
@@ -1606,7 +1606,7 @@ public class SystemViews extends javax.swing.JFrame {
     public javax.swing.JComboBox<String> cmb_Suppliers_city;
     public javax.swing.JComboBox<Object> cmb_product_categories;
     public javax.swing.JComboBox<Object> cmb_purchase_supplier;
-    public javax.swing.JTable employees_table;
+    public javax.swing.JTable employees;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1698,7 +1698,7 @@ public class SystemViews extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
-    private javax.swing.JTabbedPane jTabbedPane1;
+    public javax.swing.JTabbedPane jTabbedPane1;
     public javax.swing.JTable product_table;
     private javax.swing.JTable purchases_table;
     public javax.swing.JTextField txt_Categories_id;
