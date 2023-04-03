@@ -49,8 +49,10 @@ public class login extends javax.swing.JFrame {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 48)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Iniciar sesión");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 70, -1, -1));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 70, 490, -1));
 
         jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jLabel2.setText("Usuario:");
@@ -63,6 +65,11 @@ public class login extends javax.swing.JFrame {
         btn_enter.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         btn_enter.setText("Ingresar");
         btn_enter.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_enter.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_enterActionPerformed(evt);
+            }
+        });
         jPanel1.add(btn_enter, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 310, -1, -1));
 
         txt_user.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
@@ -83,6 +90,10 @@ public class login extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btn_enterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_enterActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_enterActionPerformed
 
     
     public static void main(String args[]) {

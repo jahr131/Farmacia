@@ -52,11 +52,11 @@ public class ProductsDao {
     public List listProductsQuery(String value){
         List<Products> list_products = new ArrayList();
         String query = "SELECT pro.*, ca.name AS category_name FROM products pro, categories ca WHERE pro.category_id= ca.id ";
-        String query_search_product= "SELECT pro. *, ca.name AS category_name FROM products pro INNER JOIN categories ca " + " ON pro.category_id =ca.id  WHERE pro.name LIKE '%" + value + " %' ";
+        String query_search_product= "SELECT pro. *, ca.name AS category_name FROM products pro INNER JOIN categories ca ON pro.category_id =ca.id  WHERE pro.name LIKE '%" + value + " %' ";
         
         try {
             conn= cn.getConnection();
-            if (value.equalsIgnoreCase(" ")){
+            if (value.equalsIgnoreCase("")){
                 pst= conn.prepareStatement(query);
                 rs= pst.executeQuery();
             }else {
@@ -84,7 +84,7 @@ public class ProductsDao {
     //Modificar los productos
     
     public boolean updateProductQuery(Products product){
-        String query = "UPDATE products SET code=? , name=?, description=?, unit_price, updated, category_id=? WHERE  id=?";
+        String query = "UPDATE products SET code=? , name=?, description=?, unit_price =?, updated=?, category_id=? WHERE  id=?";
         
         Timestamp datetime = new Timestamp (new Date().getTime());
         

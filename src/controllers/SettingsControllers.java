@@ -3,6 +3,11 @@ package controllers;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import static models.EmployeesDao.address_user;
+import static models.EmployeesDao.email_user;
+import static models.EmployeesDao.full_name_user;
+import static models.EmployeesDao.id_user;
+import static models.EmployeesDao.telephone_user;
 import views.SystemViews;
 
 /**
@@ -23,6 +28,18 @@ public class SettingsControllers implements MouseListener  {
         this.views.jLabelReports.addMouseListener(this);
         this.views.jLabelSettings.addMouseListener(this);
         this.views.jLabelSuppliers.addMouseListener(this);
+        Profile();
+    }
+    
+    //Asignar el perfil del usuario
+    
+    public void Profile(){
+        
+        this.views.txt_Profile_identification.setText(""+id_user);
+        this.views.txt_Profile_name.setText(full_name_user);
+        this.views.txt_Profile_address.setText(address_user);
+        this.views.txt_Profile_telephone.setText(telephone_user);
+        this.views.txt_Profile_email.setText(email_user);
     }
 
     @Override

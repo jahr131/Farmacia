@@ -2,16 +2,50 @@
 
 //  @author ALEJANDRO
 
+import controllers.CategoriesController;
+import controllers.CustomersController;
 import controllers.EmployeesController;
+import controllers.ProductsController;
 import controllers.SettingsControllers;
+import controllers.SuppliersController;
+import models.Categories;
+import models.CategoriesDao;
+import models.Customers;
+import models.CustomersDao;
 import models.Employees;
 import models.EmployeesDao;
+import static models.EmployeesDao.full_name_user;
+import static models.EmployeesDao.rol_user;
+import models.Products;
+import models.ProductsDao;
+import models.Suppliers;
+import models.SuppliersDao;
 
  
 public class SystemViews extends javax.swing.JFrame {
     
+    //Empleados 
     Employees employee= new Employees();
     EmployeesDao employeeDao= new EmployeesDao();
+    
+    //Clientes
+    
+    Customers customer=new Customers();
+    CustomersDao customerDao= new CustomersDao();
+    
+    //Proveedores
+    Suppliers supplier=new Suppliers();
+    SuppliersDao supplierDao= new SuppliersDao();
+    
+    //Categorias
+    Categories category=new Categories();
+    CategoriesDao categoriesDao= new CategoriesDao();
+    
+    //Productos
+    Products product= new Products();
+    ProductsDao productsDao=new ProductsDao();
+    
+    
     
 
     public SystemViews() {
@@ -20,6 +54,7 @@ public class SystemViews extends javax.swing.JFrame {
         setResizable(false);
         setTitle("Panel principal");
         setLocationRelativeTo(null);
+        titleInterface();
         
         //Controlador Settings
         SettingsControllers setting= new SettingsControllers (this);
@@ -28,6 +63,30 @@ public class SystemViews extends javax.swing.JFrame {
         // Controlador Empleados
         EmployeesController employee_account= new EmployeesController(employee,employeeDao,this);
         employee_account.listAllEmployees();
+        
+        //Controlador Clientes
+        CustomersController customer_account=new CustomersController(customer,customerDao, this);
+        customer_account.listAllCustomers();
+        
+        
+        //Controlador proveedores
+        SuppliersController supplier_account=new SuppliersController(supplier,supplierDao, this);
+        supplier_account.listAllSuppliers();
+        
+        //Controlador categorias
+        CategoriesController category_account=new CategoriesController(category,categoriesDao, this);
+        category_account.listAllCategories();
+        
+        //Controlador productos
+        ProductsController product_account=new ProductsController(product,productsDao, this);
+        product_account.listAllproducts();
+    }
+    
+    public String titleInterface(){
+        setTitle("Panel principal - " + rol_user);
+        label_employee_name.setText(full_name_user);
+        label_employee_rol.setText(rol_user);
+        return rol_user.trim();
     }
 
 
@@ -58,6 +117,8 @@ public class SystemViews extends javax.swing.JFrame {
         btn_photo = new javax.swing.JButton();
         btn_logout = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+        label_employee_name = new javax.swing.JLabel();
+        label_employee_rol = new javax.swing.JLabel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel4 = new javax.swing.JPanel();
         jPanel13 = new javax.swing.JPanel();
@@ -73,10 +134,10 @@ public class SystemViews extends javax.swing.JFrame {
         txt_product_price_sale = new javax.swing.JTextField();
         txt_product_description = new javax.swing.JTextField();
         txt_product_id = new javax.swing.JTextField();
-        btn_product_register = new javax.swing.JButton();
-        btn_product_delete = new javax.swing.JButton();
-        btn_product_update = new javax.swing.JButton();
-        btn_product_cancel = new javax.swing.JButton();
+        btn_add_products = new javax.swing.JButton();
+        btn_delete_products = new javax.swing.JButton();
+        btn_update_products = new javax.swing.JButton();
+        btn_cancel_products = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
         txt_product_search = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -113,7 +174,7 @@ public class SystemViews extends javax.swing.JFrame {
         jLabel20 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
         txt_Customers_name = new javax.swing.JTextField();
-        txt_Customers_identification = new javax.swing.JTextField();
+        txt_Customers_id = new javax.swing.JTextField();
         txt_Customers_address = new javax.swing.JTextField();
         txt_Customers_telephone = new javax.swing.JTextField();
         txt_Customers_email = new javax.swing.JTextField();
@@ -122,7 +183,7 @@ public class SystemViews extends javax.swing.JFrame {
         btn_delete_Customers = new javax.swing.JButton();
         btn_cancel_Customers = new javax.swing.JButton();
         jLabel22 = new javax.swing.JLabel();
-        txt_Customers_search = new javax.swing.JTextField();
+        txt_customers_search = new javax.swing.JTextField();
         jScrollPane3 = new javax.swing.JScrollPane();
         Customers_table = new javax.swing.JTable();
         jPanel7 = new javax.swing.JPanel();
@@ -135,7 +196,7 @@ public class SystemViews extends javax.swing.JFrame {
         jLabel28 = new javax.swing.JLabel();
         jLabel29 = new javax.swing.JLabel();
         jLabel30 = new javax.swing.JLabel();
-        txt_Employees_identification = new javax.swing.JTextField();
+        txt_Employees_id = new javax.swing.JTextField();
         txt_Employees_name = new javax.swing.JTextField();
         txt_Employees_user = new javax.swing.JTextField();
         txt_Employees_address = new javax.swing.JTextField();
@@ -150,7 +211,7 @@ public class SystemViews extends javax.swing.JFrame {
         jLabel31 = new javax.swing.JLabel();
         txt_employees_search = new javax.swing.JTextField();
         jScrollPane4 = new javax.swing.JScrollPane();
-        employees = new javax.swing.JTable();
+        employees_table = new javax.swing.JTable();
         jPanel8 = new javax.swing.JPanel();
         jPanel16 = new javax.swing.JPanel();
         jLabel32 = new javax.swing.JLabel();
@@ -404,22 +465,36 @@ public class SystemViews extends javax.swing.JFrame {
 
         btn_photo.setBackground(new java.awt.Color(0, 102, 102));
         btn_photo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/2922716 (1).png"))); // NOI18N
-        jPanel3.add(btn_photo, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 10, -1, 80));
+        btn_photo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_photoActionPerformed(evt);
+            }
+        });
+        jPanel3.add(btn_photo, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 10, 90, 80));
 
         btn_logout.setBackground(new java.awt.Color(0, 102, 102));
         btn_logout.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        btn_logout.setForeground(new java.awt.Color(255, 255, 255));
         btn_logout.setText("Salir");
         btn_logout.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_logoutActionPerformed(evt);
             }
         });
-        jPanel3.add(btn_logout, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 40, -1, -1));
+        jPanel3.add(btn_logout, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 40, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 48)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Freed from Desire");
         jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 23, 430, 60));
+
+        label_employee_name.setFont(new java.awt.Font("Times New Roman", 1, 11)); // NOI18N
+        label_employee_name.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel3.add(label_employee_name, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 40, 120, 20));
+
+        label_employee_rol.setFont(new java.awt.Font("Times New Roman", 1, 11)); // NOI18N
+        label_employee_rol.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel3.add(label_employee_rol, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 60, 120, 20));
 
         getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 0, 1010, 100));
 
@@ -460,21 +535,26 @@ public class SystemViews extends javax.swing.JFrame {
 
         txt_product_id.setEditable(false);
 
-        btn_product_register.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        btn_product_register.setForeground(new java.awt.Color(0, 0, 0));
-        btn_product_register.setText("Registrar");
+        btn_add_products.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        btn_add_products.setForeground(new java.awt.Color(0, 0, 0));
+        btn_add_products.setText("Registrar");
 
-        btn_product_delete.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        btn_product_delete.setForeground(new java.awt.Color(0, 0, 0));
-        btn_product_delete.setText("Eliminar");
+        btn_delete_products.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        btn_delete_products.setForeground(new java.awt.Color(0, 0, 0));
+        btn_delete_products.setText("Eliminar");
 
-        btn_product_update.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        btn_product_update.setForeground(new java.awt.Color(0, 0, 0));
-        btn_product_update.setText("Actualizar");
+        btn_update_products.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        btn_update_products.setForeground(new java.awt.Color(0, 0, 0));
+        btn_update_products.setText("Modificar");
+        btn_update_products.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_update_productsActionPerformed(evt);
+            }
+        });
 
-        btn_product_cancel.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        btn_product_cancel.setForeground(new java.awt.Color(0, 0, 0));
-        btn_product_cancel.setText("Cancelar");
+        btn_cancel_products.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        btn_cancel_products.setForeground(new java.awt.Color(0, 0, 0));
+        btn_cancel_products.setText("Cancelar");
 
         javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
         jPanel13.setLayout(jPanel13Layout);
@@ -503,11 +583,12 @@ public class SystemViews extends javax.swing.JFrame {
                         .addComponent(cmb_product_categories, 0, 160, Short.MAX_VALUE)
                         .addComponent(txt_product_description)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 98, Short.MAX_VALUE)
-                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btn_product_update, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btn_product_cancel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btn_product_delete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btn_product_register, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(btn_update_products, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btn_cancel_products, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btn_add_products, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btn_delete_products, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(60, 60, 60))
         );
         jPanel13Layout.setVerticalGroup(
@@ -523,20 +604,22 @@ public class SystemViews extends javax.swing.JFrame {
                             .addComponent(txt_product_description, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel13Layout.createSequentialGroup()
                         .addGap(22, 22, 22)
-                        .addComponent(btn_product_register)))
+                        .addComponent(btn_add_products)))
                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel13Layout.createSequentialGroup()
-                        .addGap(95, 95, 95)
-                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel8)
-                            .addComponent(txt_product_price_sale, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_product_id, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel13Layout.createSequentialGroup()
-                        .addGap(21, 21, 21)
-                        .addComponent(btn_product_delete)
-                        .addGap(29, 29, 29)
-                        .addComponent(btn_product_update))
+                        .addGap(19, 19, 19)
+                        .addComponent(btn_update_products)
+                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel13Layout.createSequentialGroup()
+                                .addGap(49, 49, 49)
+                                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel8)
+                                    .addComponent(txt_product_price_sale, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txt_product_id, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel13Layout.createSequentialGroup()
+                                .addGap(27, 27, 27)
+                                .addComponent(btn_delete_products))))
                     .addGroup(jPanel13Layout.createSequentialGroup()
                         .addGap(33, 33, 33)
                         .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -545,7 +628,7 @@ public class SystemViews extends javax.swing.JFrame {
                             .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(cmb_product_categories, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(9, 9, 9)
-                .addComponent(btn_product_cancel)
+                .addComponent(btn_cancel_products)
                 .addContainerGap(35, Short.MAX_VALUE))
         );
 
@@ -781,8 +864,8 @@ public class SystemViews extends javax.swing.JFrame {
         txt_Customers_name.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         txt_Customers_name.setForeground(new java.awt.Color(0, 0, 0));
 
-        txt_Customers_identification.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
-        txt_Customers_identification.setForeground(new java.awt.Color(0, 0, 0));
+        txt_Customers_id.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        txt_Customers_id.setForeground(new java.awt.Color(0, 0, 0));
 
         txt_Customers_address.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         txt_Customers_address.setForeground(new java.awt.Color(0, 0, 0));
@@ -828,7 +911,7 @@ public class SystemViews extends javax.swing.JFrame {
                 .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel14Layout.createSequentialGroup()
                         .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txt_Customers_identification, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_Customers_id, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txt_Customers_name, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(78, 78, 78)
                         .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -864,7 +947,7 @@ public class SystemViews extends javax.swing.JFrame {
                         .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel18)
                             .addComponent(jLabel21)
-                            .addComponent(txt_Customers_identification, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_Customers_id, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txt_Customers_email, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel14Layout.createSequentialGroup()
                         .addGap(29, 29, 29)
@@ -890,21 +973,21 @@ public class SystemViews extends javax.swing.JFrame {
         jLabel22.setText("Buscar:");
         jPanel6.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 310, 50, -1));
 
-        txt_Customers_search.setFont(new java.awt.Font("Times New Roman", 0, 11)); // NOI18N
-        jPanel6.add(txt_Customers_search, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 310, 160, 25));
+        txt_customers_search.setFont(new java.awt.Font("Times New Roman", 0, 11)); // NOI18N
+        jPanel6.add(txt_customers_search, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 310, 160, 25));
 
-        Customers_table.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        Customers_table.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         Customers_table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Nombre", "Identificación", "Teléfono", "Dirección", "Correo"
+                "Identificación", "Nombre", "Dirección", "Teléfono", "Correo"
             }
         ));
         jScrollPane3.setViewportView(Customers_table);
 
-        jPanel6.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, 930, 150));
+        jPanel6.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 360, 930, 150));
 
         jTabbedPane1.addTab("Clientes", jPanel6);
 
@@ -937,7 +1020,7 @@ public class SystemViews extends javax.swing.JFrame {
         jLabel30.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
         jLabel30.setText("Contraseña:");
 
-        txt_Employees_identification.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        txt_Employees_id.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
 
         txt_Employees_name.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
 
@@ -979,7 +1062,7 @@ public class SystemViews extends javax.swing.JFrame {
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txt_Employees_user, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_Employees_name, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_Employees_identification, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_Employees_id, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cmb_Employees_rol, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(78, 78, 78)
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1017,7 +1100,7 @@ public class SystemViews extends javax.swing.JFrame {
                     .addGroup(jPanel15Layout.createSequentialGroup()
                         .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_Employees_identification, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txt_Employees_id, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(31, 31, 31)
                         .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1051,8 +1134,9 @@ public class SystemViews extends javax.swing.JFrame {
         txt_employees_search.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         jPanel7.add(txt_employees_search, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 330, 160, 25));
 
-        employees.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
-        employees.setModel(new javax.swing.table.DefaultTableModel(
+        employees_table.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        employees_table.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        employees_table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -1060,7 +1144,7 @@ public class SystemViews extends javax.swing.JFrame {
                 "Identificación", "Nombre ", "Usuario", "Dirección", "Teléfono", "Correo", "Rol"
             }
         ));
-        jScrollPane4.setViewportView(employees);
+        jScrollPane4.setViewportView(employees_table);
 
         jPanel7.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 370, 930, 130));
 
@@ -1230,7 +1314,7 @@ public class SystemViews extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Id", "Nombre", "Dirección", "Teléfono", "Correo", "Descripción", "Ciudad"
+                "Id", "Nombre", "Descripción", "Dirección", "Telefono", "Correo", "Ciudad"
             }
         ));
         jScrollPane5.setViewportView(Suppliers_table);
@@ -1330,7 +1414,7 @@ public class SystemViews extends javax.swing.JFrame {
         txt_Categories_search.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         jPanel9.add(txt_Categories_search, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 90, 160, 25));
 
-        Categories_table.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        Categories_table.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         Categories_table.setForeground(new java.awt.Color(0, 0, 0));
         Categories_table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -1538,6 +1622,14 @@ public class SystemViews extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btn_logoutActionPerformed
 
+    private void btn_photoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_photoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_photoActionPerformed
+
+    private void btn_update_productsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_update_productsActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_update_productsActionPerformed
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -1580,33 +1672,33 @@ public class SystemViews extends javax.swing.JFrame {
     public javax.swing.JButton btn_add_Employees;
     public javax.swing.JButton btn_add_Suppliers;
     public javax.swing.JButton btn_add_product_to_buy;
+    public javax.swing.JButton btn_add_products;
     public javax.swing.JButton btn_cancel_Categories;
     public javax.swing.JButton btn_cancel_Customers;
     public javax.swing.JButton btn_cancel_Employees;
     public javax.swing.JButton btn_cancel_Suppliers;
+    public javax.swing.JButton btn_cancel_products;
     public javax.swing.JButton btn_confirm_purchase;
     public javax.swing.JButton btn_delete_Categories;
     public javax.swing.JButton btn_delete_Customers;
     public javax.swing.JButton btn_delete_Employees;
     public javax.swing.JButton btn_delete_Suppliers;
+    public javax.swing.JButton btn_delete_products;
     public javax.swing.JButton btn_logout;
     public javax.swing.JButton btn_new_purchase;
     public javax.swing.JButton btn_photo;
-    public javax.swing.JButton btn_product_cancel;
-    public javax.swing.JButton btn_product_delete;
-    public javax.swing.JButton btn_product_register;
-    public javax.swing.JButton btn_product_update;
     public javax.swing.JButton btn_remove_purchase;
     public javax.swing.JButton btn_update_Categories;
     public javax.swing.JButton btn_update_Customers;
     public javax.swing.JButton btn_update_Employees;
     public javax.swing.JButton btn_update_Profile;
     public javax.swing.JButton btn_update_Suppliers;
+    public javax.swing.JButton btn_update_products;
     public javax.swing.JComboBox<String> cmb_Employees_rol;
     public javax.swing.JComboBox<String> cmb_Suppliers_city;
     public javax.swing.JComboBox<Object> cmb_product_categories;
     public javax.swing.JComboBox<Object> cmb_purchase_supplier;
-    public javax.swing.JTable employees;
+    public javax.swing.JTable employees_table;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1699,6 +1791,8 @@ public class SystemViews extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
     public javax.swing.JTabbedPane jTabbedPane1;
+    public javax.swing.JLabel label_employee_name;
+    public javax.swing.JLabel label_employee_rol;
     public javax.swing.JTable product_table;
     private javax.swing.JTable purchases_table;
     public javax.swing.JTextField txt_Categories_id;
@@ -1706,13 +1800,12 @@ public class SystemViews extends javax.swing.JFrame {
     public javax.swing.JTextField txt_Categories_search;
     public javax.swing.JTextField txt_Customers_address;
     public javax.swing.JTextField txt_Customers_email;
-    public javax.swing.JTextField txt_Customers_identification;
+    public javax.swing.JTextField txt_Customers_id;
     public javax.swing.JTextField txt_Customers_name;
-    public javax.swing.JTextField txt_Customers_search;
     public javax.swing.JTextField txt_Customers_telephone;
     public javax.swing.JTextField txt_Employees_address;
     public javax.swing.JTextField txt_Employees_email;
-    public javax.swing.JTextField txt_Employees_identification;
+    public javax.swing.JTextField txt_Employees_id;
     public javax.swing.JTextField txt_Employees_name;
     public javax.swing.JPasswordField txt_Employees_password;
     public javax.swing.JTextField txt_Employees_telephone;
@@ -1731,6 +1824,7 @@ public class SystemViews extends javax.swing.JFrame {
     public javax.swing.JTextField txt_Suppliers_name;
     public javax.swing.JTextField txt_Suppliers_search;
     public javax.swing.JTextField txt_Suppliers_telephone;
+    public javax.swing.JTextField txt_customers_search;
     public javax.swing.JTextField txt_employees_search;
     public javax.swing.JTextField txt_product_code;
     public javax.swing.JTextField txt_product_description;
